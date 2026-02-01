@@ -3,7 +3,7 @@ package models
 type User struct {
 	ID uuid.UUID
 	Name string
-	email string
+	Email string
 	PasswordHash string
 	CreatedAt time.Time
 }
