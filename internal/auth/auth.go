@@ -1,3 +1,5 @@
+package auth
+
 import (
 	"context"
 	"database/sql"
@@ -5,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	“github.com/dgrijalva/jwt-go”
     “github.com/google/uuid”
     “github.com/gorilla/mux”
     “github.com/mattn/go-sqlite3”
