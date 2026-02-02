@@ -4,10 +4,10 @@ import (
     "database/sql"
     "chat-app/internal/models"
     "github.com/google/uuid"
-  _ "github.com/lib/pq"
+   _ "github.com/lib/pq"
 )
 
-type SessionRepo structure {
+type SessionRepo struct {
 	db *sql.DB
 }
 
@@ -15,7 +15,7 @@ func NewSessionRepo(db *sql.DB) *SessionRepo {
 	return &SessionRepo{db:db}
 }
 
-func (r *UserRepo) Create(s *models.Session) error {
+func (r *SessionRepo) Create(s *models.Session) error {
   _,err := r.db.Exec(`INSERT INTO sessions
 		             (id, user_id, device_id, ip, user_agent, created_at, expires_at, revoked)
 		             VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, s.ID, s.UserID,
@@ -24,9 +24,9 @@ func (r *UserRepo) Create(s *models.Session) error {
 }
 
 
-func (r *UserRepo) FindByID(token string) (*models.Session, error) {
+func (r *SessionRepo) FindByID(token string) (*models.Session, error) {
   s := &models.Session{}
-  error := r.db.QuerRow(`SELECT id, user_id, device_id, ip, user_agent, created_at, expired_at,
+  err := r.db.QueryRow(`SELECT id, user_id, device_id, ip, user_agent, created_at, expires_at,
                          revoked FROM sessions WHERE id = $1`, token).Scan(&s.ID, &s.UserID,
                            &s.DeviceID, &s.IP, &s.UserAgent, &s.CreatedAt, &s.ExpiresAt, &s.Revoked)
   if err !=nil {

@@ -3,7 +3,7 @@ package auth
 import (
 	"errors"
 	"time"
-    “github.com/google/uuid”
+    "github.com/google/uuid"
     "chat-app/internal/db"
 	"chat-app/internal/models"
 )
@@ -19,12 +19,14 @@ type AuthService struct {
 	sessions db.SessionRepository
 }
 
+var ErrInvalidCredentials = errors.New("invalid credentials")
+
 func NewService(u db.UserRepository, s db.SessionRepository) *AuthService {
 	return &AuthService{users: u, sessions: s}
 }
 
-func (a *AuthService) Login(email, password string, meta Meta) (token string, error) {
-user, err := FindByEmail(email)
+func (a *AuthService) Login(email, password string, meta Meta) (string, error) {
+user, err := a.users.FindByEmail(email)
 
 if err!=nil || !VerifyPassword(user.PasswordHash, password) {
 	return "", ErrInvalidCredentials
@@ -43,7 +45,7 @@ session := &models.Session{
 		UserAgent: meta.UserAgent,
 		CreatedAt: time.Now(),
 		ExpiresAt: time.Now().Add(30 * 24 * time.Hour),
-		Revoked:   false
+		Revoked:   false,
 }
 
 return token, a.sessions.Create(session)
@@ -51,16 +53,16 @@ return token, a.sessions.Create(session)
 }
 
 func (a *AuthService) Logout(token string) error {
-return a.session.Revoke(token)	
+return a.sessions.Revoke(token)	
 }
 
-func (a *Service) Signup(name, email, password string) error {
+func (a *AuthService) Signup(name, email, password string) error {
 hash, err := HashPassword(password)
 if err!=nil {
 	return err
 }
 
-users := &models.User {
+user := &models.User {
 		ID:           uuid.New(),
 		Name:         name,
 		Email:        email,
@@ -68,5 +70,5 @@ users := &models.User {
 		CreatedAt:    time.Now(),
 }
 
-return a.users.create
+return a.users.Create(user)
 }
