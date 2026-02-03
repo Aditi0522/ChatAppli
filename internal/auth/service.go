@@ -3,6 +3,7 @@ package auth
 import (
 	"errors"
 	"time"
+	"fmt"
     "github.com/google/uuid"
     "chat-app/internal/db"
 	"chat-app/internal/models"
@@ -27,7 +28,6 @@ func NewService(u db.UserRepository, s db.SessionRepository) *AuthService {
 
 func (a *AuthService) Login(email, password string, meta Meta) (string, error) {
 user, err := a.users.FindByEmail(email)
-
 if err!=nil || !VerifyPassword(user.PasswordHash, password) {
 	return "", ErrInvalidCredentials
 }
@@ -48,7 +48,12 @@ session := &models.Session{
 		Revoked:   false,
 }
 
-return token, a.sessions.Create(session)
+err = a.sessions.Create(session)
+if err != nil {
+    fmt.Println("Session create error:", err)
+    return "", err
+}
+return token, nil
 
 }
 

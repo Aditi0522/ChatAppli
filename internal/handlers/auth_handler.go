@@ -3,7 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-
+	"strings"
 	"chat-app/internal/auth"
 )
 
@@ -21,13 +21,32 @@ var req struct {
 	Email string
 	Password string
 }
-json.NewDecoder(r.Body).Decode(&req)
+if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	http.Error(w, "Invalid JSON", http.StatusBadRequest)
+	return
+}
+
+if strings.TrimSpace(req.Name) == "" {
+        http.Error(w, "name is required", http.StatusBadRequest)
+        return
+}
+
+if !isValidEmail(req.Email) {
+        http.Error(w, "invalid email", http.StatusBadRequest)
+        return
+}
+
+if !isValidPassword(req.Password) {
+	http.Error(w, "Password should be atleast 8 characters, and contain upper, lower, digit and symbol",
+               http.StatusBadRequest)
+}
 
 err := h.auth.Signup(req.Name, req.Email, req.Password)
 if err!= nil {
 	http.Error(w,err.Error(), http.StatusBadRequest)
 	return
 }
+
 w.WriteHeader(http.StatusCreated)
 }
 
