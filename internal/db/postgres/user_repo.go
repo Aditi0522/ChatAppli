@@ -2,7 +2,7 @@ package postgres
 
 import (
     "database/sql"
-    "chat-app/internal/models"
+    "github.com/Aditi0522/ChatAppli/internal/models"
     "github.com/google/uuid"
   _ "github.com/lib/pq"
 )

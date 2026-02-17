@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"chat-app/internal/db"
+	"github.com/Aditi0522/ChatAppli/internal/db"
 )
 
 type ctxKey string

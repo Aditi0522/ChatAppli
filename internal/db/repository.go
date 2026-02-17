@@ -1,7 +1,7 @@
 package db
 
 import (
-    "chat-app/internal/models"
+    "github.com/Aditi0522/ChatAppli/internal/models"
 	"github.com/google/uuid"
 )
 

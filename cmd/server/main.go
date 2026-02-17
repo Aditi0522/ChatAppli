@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"chat-app/internal/auth"
-	"chat-app/internal/db/postgres"
-	"chat-app/internal/handlers"
-	"chat-app/internal/middleware"
-	"chat-app/internal/routes"
+	"github.com/Aditi0522/ChatAppli/internal/auth"
+	"github.com/Aditi0522/ChatAppli/internal/db/postgres"
+	"github.com/Aditi0522/ChatAppli/internal/handlers"
+	"github.com/Aditi0522/ChatAppli/internal/middleware"
+	"github.com/Aditi0522/ChatAppli/internal/routes"
 	"github.com/joho/godotenv"
 
 	"github.com/go-chi/chi/v5"

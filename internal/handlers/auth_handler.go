@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
-	"chat-app/internal/auth"
+	"github.com/Aditi0522/ChatAppli/internal/auth"
 )
 
 type AuthHandler struct {

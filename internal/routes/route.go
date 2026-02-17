@@ -2,7 +2,7 @@ package routes
 
 import (
 	"net/http"
-	"chat-app/internal/handlers"
+	"github.com/Aditi0522/ChatAppli/internal/handlers"
 	"github.com/go-chi/chi/v5"
 )
 

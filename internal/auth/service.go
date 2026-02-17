@@ -5,8 +5,8 @@ import (
 	"time"
 	"fmt"
     "github.com/google/uuid"
-    "chat-app/internal/db"
-	"chat-app/internal/models"
+    "github.com/Aditi0522/ChatAppli/internal/db"
+	"github.com/Aditi0522/ChatAppli/internal/models"
 )
 
 type Meta struct {

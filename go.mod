@@ -1,4 +1,4 @@
-module chat-app
+module github.com/Aditi0522/ChatAppli
 
 go 1.25.4
 
